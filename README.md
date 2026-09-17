@@ -1,22 +1,61 @@
 # page2md
 
-**page2md** converts any web page into clean, LLM-ready Markdown. It renders the page to a PDF using the ego lite browser, then extracts structured Markdown, typed block annotations, and token-bounded citable chunks — entirely on your local machine, with no LLM or API calls.
+[![npm](https://img.shields.io/npm/v/page2md-cli?label=npm%20page2md-cli)](https://www.npmjs.com/package/page2md-cli)
+[![skills.sh](https://skills.sh/b/benjamincham/page2md)](https://skills.sh/benjamincham/page2md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**page2md is an agent skill** that turns any web page into clean, LLM-ready Markdown. Install it once and your AI agent (Claude Code, Cursor, Codex, pi, …) can grab any URL as structured Markdown, typed blocks, and token-bounded citable chunks — on demand, in natural language.
+
+It renders the page to PDF with the ego lite browser, then a fully local extraction layer (PyMuPDF — no LLM, no API calls, zero model tokens) distills it into:
+
+- `page.md` — clean Markdown with YAML front matter
+- `page.json` — typed blocks with heading levels, bounding boxes, links
+- `chunks.jsonl` — token-bounded chunks with `heading_path` for precise citation and context budgeting
 
 ## Who is this for
 
-Developers and agents that need deterministic, reproducible web-page extraction: content pipelines, RAG ingestion, automated research agents, or any workflow where you need a page's text without burning LLM tokens on HTML parsing.
+Agents and the developers who direct them: RAG ingestion, research workflows, content pipelines, or any task where an agent needs a page's *content* without burning tokens parsing HTML.
+
+## Install the skill for your agent
+
+page2md ships as an [Agent Skill](https://agentskills.io) — a `SKILL.md` folder your agent loads dynamically. Install it with the [`skills`](https://github.com/vercel-labs/skills) CLI:
+
+```bash
+npx skills add benjamincham/page2md --skill page-to-markdown        # this project
+npx skills add benjamincham/page2md --skill page-to-markdown -g     # all your agents, user-level
+```
+
+The CLI auto-detects installed agents (Claude Code, Cursor, Codex, …) and installs the skill into their skills directories. List what a repo offers before installing:
+
+```bash
+npx skills add benjamincham/page2md -l
+```
+
+**No install needed?** Generate a one-shot prompt with the skill's instructions instead:
+
+```bash
+npx skills use benjamincham/page2md@page-to-markdown
+```
 
 ## Using with an agent
 
-Once the skill is installed, just tell the agent what you want:
+Once the skill is installed, just tell the agent what you want — no special syntax:
 
 ```
 use page2md, grab the md for https://example.com
 ```
 
-The agent handles the rest — capturing, extracting, and returning the Markdown.
+```
+fetch https://docs.example.com/guide with page2md and give me the chunks under 500 tokens
+```
 
-## Quick install (npx)
+The agent handles the rest — capturing the page, extracting, and returning the Markdown. It reads the skill's `SKILL.md` for the exact commands, gates and output paths.
+
+> **For agents:** the skill folder is `skills/page-to-markdown/` in this repo. Point an agent at this repository and it can bootstrap itself — `SKILL.md` contains the full setup and usage protocol.
+
+## Quick install (CLI, via npx)
+
+The same engine is available as a plain CLI, no agent required.
 
 Run the following command in your terminal to install page2md globally:
 
@@ -50,35 +89,7 @@ pip install -e '.[deep]'    # optional docling deep parser (local CPU models)
 pip install -e '.[dev]'     # dev tools: pytest, ruff, mypy
 ```
 
-> **Note:** page2md is not published to PyPI — install via `npx page2md-cli` (see Quick install above), or from a local checkout / git URL.
-
-### Install as an agent skill
-
-page2md ships a skill under `skills/page-to-markdown/`, installable with the `skills` CLI:
-
-```bash
-npx skills add <repo-url> --skill page-to-markdown        # project scope
-npx skills add <repo-url> --skill page-to-markdown -g     # global
-```
-
-Alternatively, bootstrap the CLI directly with npx — no skill needed:
-
-```bash
-npx page2md-cli --version   # installs the Python CLI once, then runs it
-```
-
-After installing the skill, run the bootstrap script once to install the Python CLI (tries `uv tool`, `pipx`, then `pip install --user`):
-
-```bash
-bash <installed-skill-dir>/scripts/bootstrap.sh
-page2md --version
-```
-
-To install from a local checkout instead of the default source:
-
-```bash
-PAGE2MD_SOURCE=/path/to/page2md bash scripts/bootstrap.sh
-```
+> **Note:** page2md is not published to PyPI — install the skill or CLI as above, or `pip install` from a local checkout / git URL.
 
 ## Usage
 
