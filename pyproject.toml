@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "page2md"
+version = "0.1.0"
+description = "URL -> ego-browser PDF -> fully local LLM-ready Markdown, blocks and chunks. Zero LLM tokens."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "pymupdf>=1.24",
+    "pymupdf4llm>=0.0.17",
+    "tiktoken>=0.7",
+]
+
+[project.optional-dependencies]
+deep = ["docling>=2.0"]
+dev = ["pytest", "ruff", "mypy"]
+
+[project.scripts]
+page2md = "page2md.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/page2md"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+
+[tool.mypy]
+mypy_path = "src"
+disallow_untyped_defs = true
+warn_unused_ignores = true
+warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = ["pymupdf", "fitz", "pymupdf4llm", "tiktoken", "docling", "docling.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
