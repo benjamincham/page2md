@@ -6,7 +6,7 @@ set -eu
 # Default install source. A git URL works for uv, pipx and pip alike; edit
 # this single line once the repo has a public URL. Override at runtime with
 # PAGE2MD_SOURCE — a local checkout path or any pip-installable spec.
-DEFAULT_SOURCE="git+https://github.com/OWNER/REPO.git"
+DEFAULT_SOURCE="git+https://github.com/benjamincham/page2md.git"
 SRC="${PAGE2MD_SOURCE:-$DEFAULT_SOURCE}"
 
 if command -v page2md >/dev/null 2>&1; then

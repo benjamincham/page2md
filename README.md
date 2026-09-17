@@ -16,6 +16,22 @@ use page2md, grab the md for https://example.com
 
 The agent handles the rest — capturing, extracting, and returning the Markdown.
 
+## Quick install (npx)
+
+The fastest way to get `page2md` on any machine with Node 16+ and Python 3.10+:
+
+```bash
+npx page2md-cli url "https://example.com" --out out --json
+```
+
+The npm package is a thin launcher: on first run it installs the Python CLI once (via `uv tool`, `pipx`, or `pip --user`) from this repo's git URL, then forwards everything to it. Subsequent runs skip straight to the CLI. Set `PAGE2MD_SOURCE` to install from a different source (e.g. a fork or local checkout).
+
+For a persistent install:
+
+```bash
+npm install -g page2md-cli   # puts `page2md` (and `page2md-cli`) on your PATH
+```
+
 ## Prerequisites
 
 | Requirement | Notes |
@@ -26,7 +42,7 @@ The agent handles the rest — capturing, extracting, and returning the Markdown
 
 > **Tip:** If you only need to distill an already-captured PDF, `page2md parse <pdf>` works on any OS and does not require ego lite.
 
-## Install
+## Install (pip)
 
 ```bash
 pip install -e .            # base: pymupdf, pymupdf4llm, tiktoken
@@ -34,7 +50,7 @@ pip install -e '.[deep]'    # optional docling deep parser (local CPU models)
 pip install -e '.[dev]'     # dev tools: pytest, ruff, mypy
 ```
 
-> **Note:** page2md is not published to PyPI — install from a local checkout or a git URL.
+> **Note:** page2md is not published to PyPI — install via `npx page2md-cli` (see Quick install above), or from a local checkout / git URL.
 
 ### Install as an agent skill
 
@@ -43,6 +59,12 @@ page2md ships a skill under `skills/page-to-markdown/`, installable with the `sk
 ```bash
 npx skills add <repo-url> --skill page-to-markdown        # project scope
 npx skills add <repo-url> --skill page-to-markdown -g     # global
+```
+
+Alternatively, bootstrap the CLI directly with npx — no skill needed:
+
+```bash
+npx page2md-cli --version   # installs the Python CLI once, then runs it
 ```
 
 After installing the skill, run the bootstrap script once to install the Python CLI (tries `uv tool`, `pipx`, then `pip install --user`):

@@ -1,0 +1,35 @@
+{
+  "name": "page2md-cli",
+  "version": "0.1.0",
+  "description": "npm launcher for page2md — turn any web page into LLM-ready Markdown, typed blocks and citable chunks with zero LLM tokens. Bootstraps the Python CLI (uv/pipx/pip) on first run, then forwards everything to it.",
+  "license": "MIT",
+  "author": "benjamincham",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjamincham/page2md.git"
+  },
+  "bugs": {
+    "url": "https://github.com/benjamincham/page2md/issues"
+  },
+  "homepage": "https://github.com/benjamincham/page2md#readme",
+  "bin": {
+    "page2md": "bin/page2md.js",
+    "page2md-cli": "bin/page2md.js"
+  },
+  "files": [
+    "bin/"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": [
+    "page2md",
+    "markdown",
+    "pdf",
+    "scraping",
+    "rag",
+    "llm",
+    "cli",
+    "ego-lite"
+  ]
+}
