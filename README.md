@@ -18,18 +18,18 @@ The agent handles the rest — capturing, extracting, and returning the Markdown
 
 ## Quick install (npx)
 
-The fastest way to get `page2md` on any machine with Node 16+ and Python 3.10+:
+Run the following command in your terminal to install page2md globally:
+
+```bash
+npm install -g page2md-cli@latest
+```
+
+That puts `page2md` (and `page2md-cli`) on your PATH. The npm package is a thin launcher: on first run it installs the Python CLI once (via `uv tool`, `pipx`, or `pip --user`) from this repo's git URL, then forwards everything to it. Subsequent runs skip straight to the CLI. Set `PAGE2MD_SOURCE` to install from a different source (e.g. a fork or local checkout).
+
+Prefer not to install anything? Run it straight away with npx:
 
 ```bash
 npx page2md-cli url "https://example.com" --out out --json
-```
-
-The npm package is a thin launcher: on first run it installs the Python CLI once (via `uv tool`, `pipx`, or `pip --user`) from this repo's git URL, then forwards everything to it. Subsequent runs skip straight to the CLI. Set `PAGE2MD_SOURCE` to install from a different source (e.g. a fork or local checkout).
-
-For a persistent install:
-
-```bash
-npm install -g page2md-cli   # puts `page2md` (and `page2md-cli`) on your PATH
 ```
 
 ## Prerequisites
